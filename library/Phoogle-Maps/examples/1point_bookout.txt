@@ -1,0 +1,27 @@
+<?php
+/**
+* Showing 1 point with Phoogle Maps
+* class developed by Justin Johnson <justinjohnson@system7designs.com>
+*/
+
+require_once 'phoogle.php';
+
+$map = new PhoogleMap();
+$map->setAPIKey("ABQIAAAA0ksKqHM3yT_xmOPe0DANGRSgKS56tcrGvqBvCzZeL0j4CtkP-hSp5WM5MGlyc05yHFboXvEqcQxslw");
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <? $map->printGoogleJS(); ?>
+   </head>
+  <body>
+  <?
+ 
+
+  $map->addGeoPoint(38.517885,-122.18462,"1013 Headlands Dr., Napa, Ca");
+  $map->showMap();
+
+  ?>
+    </body>
+
+</html>

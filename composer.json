@@ -1,0 +1,23 @@
+{
+    "name": "zendframework/skeleton-application",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.3.*",
+        "gowsram/g-maps": "dev-master",
+        "php-google-maps/php-google-maps": "dev-master",
+        "gpupo/coordinate": "dev-master",
+        "z_bodya/yii-coordinatepicker": "dev-default",
+        "dlin/geocoder": "0.9.3",
+        "geoip/geoip": "dev-master",
+        "geocaching/api": "~1.1",
+        "geoip2/geoip2": "~2.0",
+        "zendframework/zftool": "dev-master"
+    }
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="Bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Application">
+            <directory>./ApplicationTest</directory>
+        </testsuite>
+    </testsuites>
+
+    <groups>
+        <include>
+            <group>abstract-classes</group>
+            <!-- group>waypoint-model</group>
+            <group>waypoint-model-static</group>
+            <group>track-model</group>
+            <group>state-model</group>
+            <group>country-model</group>
+            <group>attribute-model</group>
+            <group>accounttype-model</group>
+            <group>title-model</group -->
+        </include>
+    </groups>
+
+    <!-- filter>
+        <whitelist>
+            <directory suffix=".php">../Application/</directory>
+            <directory suffix=".php">../library/</directory>
+            <exclude>
+                <file>application/models/testData.php</file>
+                <file>application/models/ModelTestCase.php</file>
+                <file>../application/Bootstrap.php</file>
+                <file>../Mootstrap.php</file>
+                <directory suffix=".phtml">../application/</directory>
+            </exclude>
+        </whitelist>
+    </filter -->
+
+    <logging>
+        <log type="coverage-clover" target="./log/clover-coverage.xml"/>
+        <log type="coverage-html" target="./log/report" charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="50" highLowerBound="80"/>
+        <log type="testdox-html" target="./log/testdox.html"/>
+    </logging>
+</phpunit>
