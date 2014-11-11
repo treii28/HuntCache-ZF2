@@ -6,110 +6,115 @@
 
 namespace Application\Model;
 
+use ARClassInfo;
+
 abstract class AbstractClass
 {
     private $_ref;
+    private $_classInfo;
     private $_classMethods;
     private $_classProperties;
 
     private static $_staticRef;
+    private static $_classStaticInfo;
     private static $_classStaticMethods;
     private static $_classStaticProperties;
     private static $_classConstants;
 
-    public function __construct() {
-        $this->_ref = new ReflectionClass($this);
-        $this->_setClassInfo();
+    private        $_rootInfo;
+    private static $_rootStaticInfo;
 
-        self::$_staticRef = new ReflectionClass(get_called_class());
-        self::_setStaticClassInfo();
+    public function __construct($excludeRoot=true) {
+        $this->_ref = new \ReflectionClass($this);
+        $this->_classInfo = new ARClassInfo(false);
+        $this->_setClassInfo($excludeRoot);
+
+        self::$_staticRef = new \ReflectionClass(get_called_class());
+        self::$_classStaticInfo = new ARClassInfo(true);
+        self::_setStaticClassInfo($excludeRoot);
         return;
     }
 
     public function _getPublicProperties() {
-        return $this->_classProperties['public'];
+        return $this->_classInfo->properties->public;
     }
     public function _getPrivateProperties() {
-        return $this->_classProperties['private'];
+        return $this->_classInfo->properties->private;
     }
     public function _getProtectedProperties() {
-        return $this->_classProperties['protected'];
+        return $this->_classInfo->properties->protected;
     }
     public function _getAllProperties() {
         $allProperties = array();
         foreach(array('public','protected','private') as $_t) {
-            if(!(is_null($this->_classProperties[$_t])) && is_array($this->_classProperties[$_t]) && (count($this->_classProperties[$_t]) > 0)) {
-                $allProperties = array_merge($allProperties,$this->_classProperties[$_t]);
-            }
+            array_merge($allProperties,$this->_classInfo->properties->{$_t});
         }
         return $allProperties;
     }
 
     public function _getPublicMethods() {
-        return $this->_classMethods['public'];
+        return $this->_classInfo->methods->public;
     }
     public function _getPrivateMethods() {
-        return $this->_classMethods['private'];
+        return $this->_classInfo->methods->private;
     }
     public function _getProtectedMethods() {
-        return $this->_classMethods['protected'];
+        return $this->_classInfo->methods->protected;
     }
     public function _getAllMethods() {
         $allMethods = array();
         foreach(array('public','protected','private') as $_t) {
-            if(!(is_null($this->_classMethods[$_t])) && is_array($this->_classMethods[$_t]) && (count($this->_classMethods[$_t]) > 0)) {
-                $allMethods = array_merge($allMethods,$this->_classMethods[$_t]);
-            }
+            $allMethods = array_merge($allMethods,$this->_classInfo->methods->{$_t});
         }
         return $allMethods;
     }
 
     public static function _getClassConstants() {
-        return self::$_classConstants;
+        return self::$_classStaticInfo->constants;
     }
 
     public static function _getStaticPublicProperties() {
-        return self::$_classStaticProperties['public'];
+        return self::$_classStaticInfo->properties->public;
     }
     public static function _getStaticPrivateProperties() {
-        return self::$_classStaticProperties['private'];
+        return self::$_classStaticInfo->properties->private;
     }
     public static function _getStaticProtectedProperties() {
-        return self::$_classStaticProperties['protected'];
+        return self::$_classStaticInfo->properties->protected;
     }
     public static function _getAllStaticProperties() {
         $allStaticProperties = array();
         foreach(array('public','protected','private') as $_t) {
-            if(!(is_null(self::$_classStaticProperties[$_t])) && is_array(self::$_classStaticProperties[$_t]) && (count(self::$_classStaticProperties[$_t]) > 0)) {
-                $allStaticProperties = array_merge($allStaticProperties,self::$_classStaticProperties[$_t]);
-            }
+            $allStaticProperties = array_merge($allStaticProperties,self::$_classStaticInfo->properties->{$_t});
         }
         return $allStaticProperties;
     }
 
     public static function _getStaticPublicMethods() {
-        return self::$_classStaticMethods['public'];
+        return self::$_classStaticInfo->methods->public;
     }
     public static function _getStaticPrivateMethods() {
-        return self::$_classStaticMethods['private'];
+        return self::$_classStaticInfo->methods->private;
     }
     public static function _getStaticProtectedMethods() {
-        return self::$_classStaticMethods['protected'];
+        return self::$_classStaticInfo->methods->protected;
     }
     public static function _getAllStaticMethods() {
         $allStaticMethods = array();
         foreach(array('public','protected','private') as $_t) {
-            if(!(is_null(self::$_classStaticMethods[$_t])) && is_array(self::$_classStaticMethods[$_t]) && (count(self::$_classStaticMethods[$_t]) > 0)) {
-                $allStaticMethods = array_merge($allStaticMethods,self::$_classStaticMethods[$_t]);
-            }
+            $allStaticMethods = array_merge($allStaticMethods,self::$_classStaticInfo->methods->{$_t});
         }
         return $allStaticMethods;
     }
 
-    private static function _setStaticClassInfo() {
-        if(!isset(self::$_classConstants)) {
-            self::$_classConstants = self::$_staticRef->getConstants();
-        }
+    private static function _setStaticClassInfo($excludeRoot=true) {
+        $rootInfo = (($excludeRoot) ?
+            self::_getRootInfo('static')
+            :
+            array('properties'=>array('private'=>array(),'protected'=>array(),'public'=>array()),'methods'=>array('private'=>array(),'protected'=>array(),'public'=>array()))
+        );
+
+        self::$_classConstants = self::$_staticRef->getConstants();
 
         if(self::$_classStaticProperties === null) {
             self::$_classStaticProperties = array(
@@ -118,28 +123,28 @@ abstract class AbstractClass
                 'public'    => array()
             );
             foreach(self::$_staticRef->getProperties() as $_prop) {
-                if($_prop->isStatic()) {
-                    foreach(array('public','private','protected') as $_vis) {
-                        $_visMthd = 'is'.ucfirst($_vis);
-                        if($_prop->$_visMthd()) {
-                            array_push(self::$_classStaticProperties[$_vis],$_prop->name);
+                foreach(array('public','private','protected') as $_vis) {
+                    if (($_prop->isStatic()) && (($excludeRoot) && !in_array($_prop,$rootInfo['properties'][$_vis]))) {
+                        $_visMthd = 'is' . ucfirst($_vis);
+                        if ($_prop->$_visMthd()) {
+                            array_push(self::$_classStaticProperties[$_vis], $_prop->name);
                         }
                     }
                 }
             }
-            if(self::$_classStaticMethods === null) {
-                self::$_classStaticMethods = array(
-                    'private'   => array(),
-                    'protected' => array(),
-                    'public'    => array()
-                );
-                foreach(self::$_staticRef->getMethods() as $_meth) {
-                    if($_meth->isStatic()&&(__METHOD__ !== $_meth)) {
-                        foreach(array('public','private','protected') as $_vis) {
-                            $_visMthd = 'is'.ucfirst($_vis);
-                            if($_meth->$_visMthd()) {
-                                array_push(self::$_classStaticMethods[$_vis],$_meth->name);
-                            }
+        }
+        if(self::$_classStaticMethods === null) {
+            self::$_classStaticMethods = array(
+                'private'   => array(),
+                'protected' => array(),
+                'public'    => array()
+            );
+            foreach(self::$_staticRef->getMethods() as $_meth) {
+                if($_meth->isStatic()&&(__METHOD__ !== $_meth)) {
+                    foreach(array('public','private','protected') as $_vis) {
+                        $_visMthd = 'is'.ucfirst($_vis);
+                        if($_meth->$_visMthd()) {
+                            array_push(self::$_classStaticMethods[$_vis],$_meth->name);
                         }
                     }
                 }
@@ -147,40 +152,105 @@ abstract class AbstractClass
         }
     }
 
-    private function _setClassInfo() {
-        if($this->_classProperties == null)  {
-            $this->_classProperties = array(
-                'private'   => array(),
-                'protected' => array(),
-                'public'    => array()
-            );
-            foreach($this->_ref->getProperties() as $_prop) {
-                if(!($_prop->isStatic())) {
-                    foreach(array('public','private','protected') as $_vis) {
-                        $_visMthd = 'is'.ucfirst($_vis);
-                        if($_prop->$_visMthd()) {
-                            array_push($this->_classProperties[$_vis],$_prop->name);
-                        }
+
+    private function _setClassInfo($excludeRoot=true)
+    {
+        $rootInfo = (($excludeRoot) ?
+            $this->_getRootInfo()
+            :
+            array('properties'=>array('private'=>array(),'protected'=>array(),'public'=>array()),'methods'=>array('private'=>array(),'protected'=>array(),'public'=>array()))
+        );
+
+        $this->_classProperties = array(
+            'private' => array(),
+            'protected' => array(),
+            'public' => array()
+        );
+
+        foreach ($this->_ref->getProperties() as $_prop) {
+            foreach (array('public', 'private', 'protected') as $_vis) {
+                if (!($_prop->isStatic()) && (($excludeRoot) && !in_array($_prop,$rootInfo['properties'][$_vis]))) {
+                    $_visMthd = 'is' . ucfirst($_vis);
+                    if ($_prop->$_visMthd()) {
+                        array_push($this->_classProperties[$_vis], $_prop->name);
                     }
                 }
             }
-            if(!(isset($this->_classMethods))||!(is_array($this->_classMethods))) {
-                $this->_classMethods = array(
-                    'private'   => array(),
-                    'protected' => array(),
-                    'public'    => array()
-                );
-                foreach($this->_ref->getMethods() as $_meth) {
-                    if(!($_meth->isStatic())&&(__METHOD__ !== $_meth)) {
-                        foreach(array('public','private','protected') as $_vis) {
-                            $_visMthd = 'is'.ucfirst($_vis);
-                            if($_meth->$_visMthd()) {
-                                array_push($this->_classMethods[$_vis],$_meth->name);
-                            }
+        }
+
+        $this->_classMethods = array(
+            'private' => array(),
+            'protected' => array(),
+            'public' => array()
+        );
+
+        foreach ($this->_ref->getMethods() as $_meth) {
+            if (!($_meth->isStatic()) && (__METHOD__ !== $_meth)) {
+                foreach (array('public', 'private', 'protected') as $_vis) {
+                    if (!($_meth->isStatic()) && (($excludeRoot) && !in_array($_meth,$rootInfo['methods'][$_vis]))) {
+                        $_visMthd = 'is' . ucfirst($_vis);
+                        if ($_meth->$_visMthd()) {
+                            array_push($this->_classMethods[$_vis], $_meth->name);
                         }
                     }
                 }
             }
         }
     }
+
+    private static function _getRootInfo($static=null) {
+        if($static == 'static') {
+            $static = true;
+        }
+
+        $rootInfo = array(
+            'properties' =>
+                array(
+                    'private'   => array(),
+                    'protected' => array(),
+                    'public'    => array()
+                ),
+            'methods' =>
+                array(
+                    'private'   => array(),
+                    'protected' => array(),
+                    'public'    => array()
+                ),
+        );
+
+
+        $rootClass = __CLASS__;
+        $rootRef = new \ReflectionClass('\Application\Model\AbstractClass');
+
+        foreach($rootRef->getProperties() as $_prop) {
+            foreach (array('public', 'private', 'protected') as $_vis) {
+                $_visMthd = 'is' . ucfirst($_vis);
+                if((
+                        (($static) && ($_prop->isStatic())) ||
+                        (!($static) && !($_prop->isStatic()))
+                    ) && ($_prop->$_visMthd())) {
+                    array_push($rootInfo['properties'][$_vis], $_prop->name);
+                }
+            }
+        }
+        foreach($rootRef->getMethods() as $_meth) {
+            foreach (array('public', 'private', 'protected') as $_vis) {
+                $_visMthd = 'is' . ucfirst($_vis);
+                if((
+                        (($static == 'static') && ($_meth->isStatic())) ||
+                        (($static != 'static') && !($_meth->isStatic()))
+                    ) && ($_meth->$_visMthd())) {
+                    array_push($rootInfo['properties'][$_vis], $_meth->name);
+                }
+            }
+        }
+        return $rootInfo;
+    }
+}
+
+class ARVisibility
+{
+    public $public    = array();
+    public $private   = array();
+    public $protected = array();
 }

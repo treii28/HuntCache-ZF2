@@ -1,5 +1,7 @@
 <?php
-abstract class Application\Model\ModelAbstract extends Application\Model\AbstractClass
+namespace Application\Model;
+
+abstract class ModelAbstract
 {
     const PRIMARY_ID_KEY  = 'Id';
     const LABEL_FIELD_NAME = 'name';
@@ -29,8 +31,7 @@ abstract class Application\Model\ModelAbstract extends Application\Model\Abstrac
      */
     public function __construct ($data=null)
     {
-        parent::__construct();
-        $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        //$bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         //$this->_options = $bootstrap->getOptions();
         $this->_init($data);
     }
@@ -38,6 +39,7 @@ abstract class Application\Model\ModelAbstract extends Application\Model\Abstrac
     /**
      * Initialize an instance of the class with an array of key/value pairs
      * @param array $data
+     * @throws \Exception
      */
     public function _init($data) {
         if(is_array($data)) {
@@ -51,8 +53,12 @@ abstract class Application\Model\ModelAbstract extends Application\Model\Abstrac
             $newObj = $dataMapper::getModelById($data,$dataType);
             if($newObj instanceof $dataType) {
                 // clone newObj into this
-                foreach($newObj->_getAllProperties() as $_prop) {
-                    $this->$_prop = $newObj->$_prop;
+                $newRef = new \ReflectionClass($newObj);
+                foreach($newRef->getProperties() as $_prop) {
+                    if(!$_prop->isStatic()) {
+                        $_propName = $_prop->name;
+                        $this->$_propName = $newObj->$_propName;
+                    }
                 }
             } else {
                 throw new \Exception(__METHOD__." Unable to initialize from Id '$data'");
@@ -62,11 +68,12 @@ abstract class Application\Model\ModelAbstract extends Application\Model\Abstrac
 
     /**
      * Wrapper for magic methods
-     * @param string $methodname
+     * @param string $methodName
      * @param unknown_type $data
+     * @throws \Exception for unknown method
      */
-    public function __call($methodname, $data=null) {
-        preg_match('/^([gs]et)(\w+)$/', $methodname, $matches);
+    public function __call($methodName, $data=null) {
+        preg_match('/^([gs]et)(\w+)$/', $methodName, $matches);
         $property = lcfirst($matches[2]);
         //$method = preg_replace('/ies$/', 'y', $method);
         //$method = preg_replace('/s$/', '', $method);
@@ -84,9 +91,9 @@ abstract class Application\Model\ModelAbstract extends Application\Model\Abstrac
 
     /**
      * Magic method for setting properties in the _data associative array
-     * @param string	   $property   key name of property
-     * @param unknown_type $data	   value of property
-     * @throws Exception  triggers error if property does not exist in _data
+     * @param string $property key name of property
+     * @param mixed $data  value of property
+     * @throws \Exception triggers error if property does not exist in _data
      */
     public function __set($property,$data)
     {

@@ -6,7 +6,12 @@
  * Time: 12:13 PM
  * To change this template use File | Settings | File Templates.
  */
-class Application\Model\Title extends Application\Model\ModelAbstract
+
+namespace Application\Model;
+
+use ModelAbstract;
+
+class Title extends ModelAbstract
 {
     const PRIMARY_ID_KEY  = 'titleId';
     const LABEL_FIELD_NAME = 'name';
