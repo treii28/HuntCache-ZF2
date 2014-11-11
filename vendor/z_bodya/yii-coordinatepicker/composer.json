@@ -1,0 +1,17 @@
+{
+    "name": "z_bodya/yii-coordinatepicker",
+    "description": "Widget to pick coordinates using google map in modal window",
+    "homepage": "https://bitbucket.org/z_bodya/yii-coordinatepicker",
+    "keywords": ["maps", "coordinate", "widget", "user interface"],
+    "type": "yii-extension",
+    "extra": {
+        "installer-name": "coordinatepicker"
+    },
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Bogdan Savluk",
+            "email": "savluk.bogdan@gmail.com"
+        }
+    ]
+}

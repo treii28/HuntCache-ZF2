@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>     &raquo; Markers
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">Geocaching API with PHP 5</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Geocaching.html">\Geocaching</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">122</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+            <ul class="side-nav nav nav-list">
+                <li class="nav-header">Navigation</li>
+                                                                        <li><a href="#OAuth/OAuth.php"><i class="icon-file"></i> OAuth/OAuth.php</a></li>
+                                                                                                <li><a href="#Api/AbstractGeocachingApi.php"><i class="icon-file"></i> Api/AbstractGeocachingApi.php</a></li>
+                                                                                                <li><a href="#Api/GeocachingApi.php"><i class="icon-file"></i> Api/GeocachingApi.php</a></li>
+                                                                    </ul>
+        </div>
+
+        <div class="span10 offset2">
+
+            <ul class="breadcrumb">
+                <li><a href="../"><i class="icon-map-marker"></i></a><span class="divider">\</span></li>
+                <li>Markers</li>
+            </ul>
+
+            
+            <div id="marker-accordion">
+                                                            <div class="package-contents">
+                            <a name="OAuth/OAuth.php" id="OAuth/OAuth.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                OAuth/OAuth.php
+                                <small style="float: right;padding-right: 10px;">5</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>6</td>
+                                            <td>github.com/Surfoo/geocaching-api</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>7</td>
+                                            <td>opensource.org/licenses/eclipse-2.0.php</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>25</td>
+                                            <td>staging.geocaching.com/OAuth/oauth.ashx&#039;,</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>26</td>
+                                            <td>www.geocaching.com/OAuth/oauth.ashx&#039;,</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>27</td>
+                                            <td>www.geocaching.com/OAuth/mobileoauth.ashx&#039;);</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                <div class="package-contents">
+                            <a name="Api/AbstractGeocachingApi.php" id="Api/AbstractGeocachingApi.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                Api/AbstractGeocachingApi.php
+                                <small style="float: right;padding-right: 10px;">57</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>6</td>
+                                            <td>opensource.org/licenses/eclipse-2.0.php</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>17</td>
+                                            <td>github.com/Surfoo/geocaching-api Geocaching API on GitHub</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>18</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help API Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>29</td>
+                                            <td>staging.api.groundspeak.com/Live/V6Beta/geocaching.svc/%s&#039;;</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>37</td>
+                                            <td>api.groundspeak.com/LiveV6/geocaching.svc/%s&#039;;</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>90</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/AddFavoritePointToCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>102</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/AddGeocachesToBookmarkList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>115</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/CreateFieldNoteAndPublish Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>128</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/CreateTrackableLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>140</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/DeleteCacheNote Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>152</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/DeleteUserWaypoint Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>164</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GeocodeString Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>177</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAnotherUsersProfile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>187</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAPILimits Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>196</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAttributeTypesData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>207</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/getBookmarkListByGuid Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>219</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetBookmarkListsByUserID Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>229</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetBookmarkListsForUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>238</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetCacheIdsFavoritedByUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>247</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetCachesFavoritedByUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>261</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetFullPocketQueryData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>273</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheDataTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>286</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheLogsByCacheCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>298</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/getGeocacheStatus Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>308</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>319</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetImagesForGeocache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>329</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetMembershipTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>340</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetMoreGeocaches Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>353</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetOwnedTrackables Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>366</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>376</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>387</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryZippedFile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>397</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetSiteStats Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>406</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetStatusMessages Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>418</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackableLogsByTBCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>431</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesByTBCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>444</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesByTrackingNumber Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>457</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesInCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>469</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackableTravelList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>481</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUserGallery Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>486</td>
+                                            <td>new</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>493</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/getUsersCacheCounts Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>506</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersCacheNotes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>516</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersFavoritePoints Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>528</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersGeocacheLogs Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>541</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersTrackables Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>553</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersWhoFavoritedCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>565</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUserWaypoints Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>575</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetWptLogTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>588</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetYourUserProfile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>600</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/RemoveFavoritePointFromCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>615</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SaveUserWaypoint Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>632</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SearchForGeocaches Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>645</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SearchForSouvenirsByPublicGuid Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>657</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UpdateCacheNote Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>670</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UploadImageToGeocacheLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>683</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UploadImageToTrackableLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                                                <div class="package-contents">
+                            <a name="Api/GeocachingApi.php" id="Api/GeocachingApi.php"></a>
+                            <h3>
+                            <i class="icon-file"></i>
+                                Api/GeocachingApi.php
+                                <small style="float: right;padding-right: 10px;">60</small>
+                            </h3>
+                            <div>
+                                <table class="table markers table-bordered">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Line</th>
+                                        <th>Description</th>
+                                    </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>6</td>
+                                            <td>opensource.org/licenses/eclipse-2.0.php</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>15</td>
+                                            <td>github.com/Surfoo/geocaching-api Geocaching API on GitHub</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>16</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help API Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>25</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/AddFavoritePointToCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>45</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/AddGeocachesToBookmarkList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>71</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/CreateFieldNoteAndPublish Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>89</td>
+                                            <td>UTCDateLogged is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>122</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/CreateTrackableLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>139</td>
+                                            <td>UTCDateLogged is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>161</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/DeleteCacheNote Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>181</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/DeleteUserWaypoint Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>201</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GeocodeString Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>222</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAnotherUsersProfile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>235</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAPILimits Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>247</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetAttributeTypesData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>261</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetBookmarkListByGuid Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>281</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetBookmarkListsByUserID Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>299</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetBookmarkListsForUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>311</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetCacheIdsFavoritedByUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>323</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetCachesFavoritedByUser Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>340</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetFullPocketQueryData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>363</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheDataTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>387</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheLogsByCacheCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>412</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheStatus Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>430</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetGeocacheTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>444</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetImagesForGeocache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>462</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetMembershipTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>476</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetMoreGeocaches Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>509</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetOwnedTrackables Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>537</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryData Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>562</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>576</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetPocketQueryZippedFile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>594</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetSiteStats Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>606</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetStatusMessages Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>621</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackableLogsByTBCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>647</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesByTBCode Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>670</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesByTrackingNumber Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>693</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackablesInCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>720</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetTrackableTravelList Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>740</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUserGallery Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>764</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersCacheCounts Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>787</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersCacheNotes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>807</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersFavoritePoints Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>822</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersGeocacheLogs Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>845</td>
+                                            <td>EndDate is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>847</td>
+                                            <td>StartDate is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>860</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersTrackables Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>886</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUsersWhoFavoritedCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>906</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetUserWaypoints Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>924</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetWptLogTypes Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>940</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/GetYourUserProfile Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>955</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/RemoveFavoritePointFromCache Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>978</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SaveUserWaypoint Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1014</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SearchForGeocaches Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1106</td>
+                                            <td>StartDateRange is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1108</td>
+                                            <td>EndDateRange is a timestamp</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1124</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/SearchForSouvenirsByPublicGuid Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1146</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UpdateCacheNote Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1170</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UploadImageToGeocacheLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                            <tr>
+                                            <td></td>
+                                            <td>1201</td>
+                                            <td>staging.api.groundspeak.com/Live/v6beta/geocaching.svc/help/operations/UploadImageToTrackableLog Documentation by Groundspeak</td>
+                                        </tr>
+                                                                    </table>
+                            </div>
+                        </div>
+                                                </div>
+        </div>
+    </section>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Geocaching.html">\Geocaching</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on August 24th, 2014 at 22:22.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
