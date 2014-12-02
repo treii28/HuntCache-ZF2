@@ -29,7 +29,7 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase {
     }
 }
 
-class Info extends \Application\Model\ModelAbstract
+class Info extends ModelAbstract
 {
     const PRIMARY_ID_KEY  = 'infoId';
     const LABEL_FIELD_NAME = 'name';

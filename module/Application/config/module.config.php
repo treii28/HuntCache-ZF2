@@ -104,4 +104,7 @@ return array(
             ),
         ),
     ),
+    'google' => array(
+        'google_map_key' => "AIzaSyC5mJf5c1C86mE93HG619grjVYlGi7e6CU",
+    ),
 );
