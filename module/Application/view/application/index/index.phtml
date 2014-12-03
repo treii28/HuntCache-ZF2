@@ -1,6 +1,6 @@
 <?php
-$config = $this->getServiceLocator()->get('Config');
-$googleKey = $config['google']['google_map_key'];
+$google = $this->configItem('google');
+$googleKey = $google['google_map_key'];
 ?>
 <!-- Include Google Maps JS API -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?= $googleKey; ?>&sensor=false">
