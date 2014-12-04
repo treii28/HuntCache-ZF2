@@ -4,7 +4,9 @@
  * @copyright Copyright (c) 2012 Finao Online, LLC. All rights reserved.
  */
 
-abstract class Application\Model\ImageAbstract extends Application\Model\AbstractClass
+namespace Application\Model\Image;
+
+abstract class ImageAbstract extends \Application\Model\ModelAbstract
 {
     const IMGDIR_SUFFIX = 'public/img/';
     const IMGURL_PREFIX = '/img/';
@@ -94,10 +96,10 @@ abstract class Application\Model\ImageAbstract extends Application\Model\Abstrac
     {
         $setMthd = 'set'.ucfirst($property);
         $caller  = get_called_class();
-        if(in_array($setMthd,$this->_getAllMethods())) {
+        if(in_array($setMthd,$this->_getRef()->getMethods())) {
             $this->$setMthd($data);
             return $this->$property;
-        } elseif(in_array($property,$this->_getAllProperties())) {
+        } elseif(in_array($property,$this->_getRef()->getProperties())) {
             $this->$property = $data;
             return $this->$property;
         } else {
@@ -112,7 +114,7 @@ abstract class Application\Model\ImageAbstract extends Application\Model\Abstrac
      */
     public function __get($property)
     {
-        if(in_array($property,$this->_getAllProperties())) {
+        if(in_array($property,$this->_getRef()->getProperties())) {
             return $this->$property;
         } else {
             throw new \Exception(__METHOD__." no such property: $property");

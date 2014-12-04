@@ -6,7 +6,7 @@
 
 namespace Application\Model\Image;
 
-class Icon extends Application\Model\ImageAbstract
+class Icon extends ImageAbstract
 {
     public $icondir;
 
