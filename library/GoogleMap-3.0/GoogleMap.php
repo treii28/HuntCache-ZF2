@@ -2610,16 +2610,17 @@ class GoogleMapAPI {
                 $_url .= sprintf('?appid=%s&location=%s',$this->lookup_server['YAHOO'],$this->app_id,rawurlencode($address));
                 $_result = false;
                 if($_result = $this->fetchURL($_url)) {
-                    return $_match;
+                    return $_result;
                 }
                 break;
         }         
-    }    
+    }
 
     /**
      * fetch a URL. Override this method to change the way URLs are fetched.
-     * 
+     *
      * @param string $url
+     * @return string
      */
     function fetchURL($url) {
 
