@@ -4,7 +4,9 @@
  * @copyright Copyright (c) 2012 Finao Online, LLC. All rights reserved.
  */
 
-class Application\Model\Track_Leg
+namespace Application\Model\Track;
+
+class Leg
 {
     // A number of functions need to know the mean radius of the Earth for its
     //  calculations. You need to set this constant to that value, in whatever

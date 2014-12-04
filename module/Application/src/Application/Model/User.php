@@ -6,8 +6,15 @@
  * Time: 10:34 AM
  * To change this template use File | Settings | File Templates.
  */
- 
-class Application\Model\User extends Application\Model\ModelAbstract implements Application\Model\Sub_StateInterface,Application\Model\Sub_CountryInterface,Application\Model\Sub_TitleInterface,Application\Model\Sub_AccountTypeInterface
+
+namespace Application\Model;
+
+use \Application\Model\Sub\AccountTypeInterface;
+use \Application\Model\Sub\StateInterface;
+use \Application\Model\Sub\CountryInterface;
+use \Application\Model\Sub\TitleInterface;
+
+class User extends ModelAbstract implements AccountTypeInterface,StateInterface,CountryInterface,TitleInterface
 {
     const PRIMARY_ID_KEY  = 'userId';
     const LABEL_FIELD_NAME = 'username';

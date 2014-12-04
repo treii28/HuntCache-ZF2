@@ -4,7 +4,9 @@
  * @copyright Copyright (c) 2012 Finao Online, LLC. All rights reserved.
  */
 
-class Application\Model\Track_Bearing
+namespace Application\Model\Track;
+
+class Bearing
 {
     public $heading;
     public $distance;

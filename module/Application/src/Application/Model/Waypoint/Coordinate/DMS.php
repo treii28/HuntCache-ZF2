@@ -5,6 +5,7 @@
  */
 
 namespace Application\Model\Waypoint\Coordinate;
+
 class DMS
 {
     /**
