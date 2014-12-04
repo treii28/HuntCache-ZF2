@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Model;
+namespace Application\Mapper;
 
 class AttributeMapper extends MapperAbstract
 {

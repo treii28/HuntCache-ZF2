@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Application\Model;
+namespace Application\Mapper;
 
 class AttributeTypeMapper extends MapperAbstract
 {

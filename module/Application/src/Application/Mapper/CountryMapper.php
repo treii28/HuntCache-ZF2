@@ -7,7 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Application\Model\CountryMapper extends Application\Model\MapperAbstract
+namespace Application\Mapper;
+
+class CountryMapper extends MapperAbstract
 {
     const DB_TABLE_NAME  = 'countries';
     const MODEL_NAME     = 'Application\Model\Country';

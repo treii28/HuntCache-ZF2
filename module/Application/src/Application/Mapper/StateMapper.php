@@ -7,7 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Application\Model\StateMapper extends Application\Model\MapperAbstract
+namespace Application\Mapper;
+
+class StateMapper extends MapperAbstract
 {
     /**
      * db table name

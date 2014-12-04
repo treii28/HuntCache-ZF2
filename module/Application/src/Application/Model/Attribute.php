@@ -133,7 +133,7 @@ class Attribute extends ModelAbstract implements Sub\AttributeTypeInterface
         if($data instanceof AttributeType) {
             $this->attributeType = $data;
         } else {
-            $this->attributeType = AttributeTypeMapper::autoDefine($data);
+            $this->attributeType = \Application\Mapper\AttributeTypeMapper::autoDefine($data);
         }
         $this->_data['attributeTypeId'] = $this->attributeType->getId();
         return $this->attributeType;

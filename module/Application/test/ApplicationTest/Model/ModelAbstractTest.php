@@ -8,6 +8,7 @@
 
 namespace ApplicationTest\Model;
 
+use Application\Mapper\MapperAbstract;
 use \Application\Model\ModelAbstract;
 use \PHPUnit_Framework_TestCase;
 
@@ -16,15 +17,18 @@ class ModelAbstractTest extends \PHPUnit_Framework_TestCase {
     /**
      * @group abstract-classes
      */
-    function testModelAbstract() {
+    function testModelAbstract()
+    {
         $inf = new Info();
+        $iClass = get_class($inf);
+        $iDataMapper = $inf->_getMapperName();
         $this->assertInstanceOf('\Application\Model\ModelAbstract',$inf);
         $this->assertEquals('infoId',$inf->_getPrimaryIdKey());
         $this->assertEquals('name',$inf->_getLabelName());
         $this->assertEquals('info',$inf->_getDataTypeName());
         //$this->assertEquals('InfoMapper',$inf->_getMapperName());
         $inf->setDescription('this is a description');
-        //$this->assertEquals('this is a description', $inf->getDescription());
+        $this->assertEquals('this is a description', $inf->getDescription());
         $foo = "something";
     }
 }
@@ -40,5 +44,16 @@ class Info extends ModelAbstract
     public function __construct($data=null) {
         $this->_data = self::$_dataStruct;
         parent::__construct($data);
+    }
+}
+
+class Infomapper extends MapperAbstract
+{
+    const DB_TABLE_NAME = 'info';
+    const MODEL_NAME    = 'Info';
+    protected static $_dbTable = null;
+
+    public function __construct() {
+        parent::__construct();
     }
 }

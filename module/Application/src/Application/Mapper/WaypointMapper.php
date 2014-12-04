@@ -1,5 +1,8 @@
 <?php
-class Application\Model\WaypointMapper extends Application\Model\MapperAbstract
+
+namespace Application\Mapper;
+
+class WaypointMapper extends MapperAbstract
 {
     const DB_TABLE_NAME = 'waypoints';
     const MODEL_NAME	= 'Application\Model\Waypoint';

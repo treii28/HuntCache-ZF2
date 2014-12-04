@@ -6,7 +6,10 @@
  * Time: 3:15 PM
  * To change this template use File | Settings | File Templates.
  */
-class Application\Model\TitleMapper extends Application\Model\MapperAbstract
+
+namespace Application\Mapper;
+
+class TitleMapper extends MapperAbstract
 {
     const DB_TABLE_NAME = 'titles';
     const MODEL_NAME	= 'Application\Model\Title';

@@ -31,9 +31,11 @@
  *
  */
 
+namespace Application\Mapper;
+
 //require_once "Geocaching/OCFParser.inc.php";
 
-class Application\Model\CacheMapper extends Application\Model\MapperAbstract
+class CacheMapper extends MapperAbstract
 {
     const DB_TABLE_NAME = 'caches';
     const MODEL_NAME	= 'Application\Model\Cache';

@@ -6,7 +6,10 @@
  * Time: 12:30 PM
  * To change this template use File | Settings | File Templates.
  */
-class Application\Model\UserMapper extends Application\Model\MapperAbstract
+
+namespace Application\Mapper;
+
+class UserMapper extends MapperAbstract
 {
     const DB_TABLE_NAME = 'users';
     const MODEL_NAME    = 'User';

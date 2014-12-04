@@ -7,6 +7,11 @@ abstract class ModelAbstract
     const LABEL_FIELD_NAME = 'name';
     const DATA_TYPE_NAME   = '';
 
+    /**
+     * @var $_ref \ReflectionClass
+     */
+    protected $_ref;
+
     protected static $_dataMapperName = '';
     protected static $_dataMapper     = null;
 
@@ -36,6 +41,12 @@ abstract class ModelAbstract
         $this->_init($data);
     }
 
+    private function _getRef() {
+        if(!($this->_ref instanceof \ReflectionClass)) {
+            $this->_ref = new \ReflectionClass($this);
+        }
+        return $this->_ref;
+    }
     /**
      * Initialize an instance of the class with an array of key/value pairs
      * @param array $data
@@ -99,10 +110,10 @@ abstract class ModelAbstract
     {
         $setMthd = 'set'.ucfirst($property);
         $dataType  = get_called_class();
-        if(in_array($setMthd,$this->_getAllMethods())) {
+        if(in_array($setMthd,$this->_getRef()->getMethods())) {
             $this->$setMthd($data);
             return $this->$property;
-        } elseif(in_array($property,$this->_getAllProperties())) {
+        } elseif(in_array($property,$this->_getRef()->getProperties())) {
             // check for an create/initialize sub objects
             if(isset($dataType::$_subs)&&array_key_exists($property,$dataType::$_subs)) {
                 $subClass = $dataType::$_subs[$property];
@@ -122,7 +133,8 @@ abstract class ModelAbstract
             // this may be overkill but handle setting sub-object properties by
             // prefixing (sub) property name with sub datatype
             $notSub = true;
-            if(in_array('_subs',$dataType::_getStaticPublicProperties())) {
+            $dtRef = new \ReflectionClass($dataType);
+            if(in_array('_subs',$dtRef->getStaticProperties())) {
                 foreach(array_keys($dataType::$_subs) as $_sKey) {
                     $preg = '/^'.$_sKey.'(.*)$/';
                     if(preg_match($preg,$property,$matches)) {
@@ -148,13 +160,13 @@ abstract class ModelAbstract
     /**
      * Magic method accessor for getting properties from the _data array
      * @param string $property   key name of property
-     * @throws Exception   triggers error if property does not exist in _data
+     * @throws \Exception   triggers error if property does not exist in _data
      */
     public function __get($property)
     {
         if(array_key_exists($property,$this->_data)) {
             return $this->_data[$property];
-        } elseif(in_array($property,$this->_getAllProperties())) {
+        } elseif(in_array($property,$this->_getRef()->getProperties())) {
             return $this->$property;
         } else {
             throw new \Exception(__METHOD__." no such property: $property");
@@ -298,14 +310,15 @@ abstract class ModelAbstract
     public static function _getMapperName() {
         $dataType = get_called_class();
         // try to find mapper name if not specified and store it
-        if(!(defined($dataType.'::$_dataMapperName')) || ($dataType::$_dataMapperName === '')) {
+        if(!(defined($dataType.'::$_dataMapperName')) || empty($dataType::$_dataMapperName)) {
             $default = $dataType."Mapper";
             if(class_exists($default)) {
                 $dataType::$_dataMapperName = $default;
             }
         }
 
-        if(class_exists($dataType::$_dataMapperName)) {
+        $dataMapperName = $dataType::$_dataMapperName;
+        if(class_exists($dataMapperName)) {
             return $dataType::$_dataMapperName;
         } else {
             throw new \Exception($dataType." unable to determine valid dataMapperName");

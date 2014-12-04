@@ -10,14 +10,8 @@
     <groups>
         <include>
             <group>abstract-classes</group>
-            <!-- group>waypoint-model</group>
-            <group>waypoint-model-static</group>
-            <group>track-model</group>
-            <group>state-model</group>
-            <group>country-model</group>
-            <group>attribute-model</group>
-            <group>accounttype-model</group>
-            <group>title-model</group -->
+            <group>datatype-model</group>
+            <group>datatype-mapper</group>
         </include>
     </groups>
 
