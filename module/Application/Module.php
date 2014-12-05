@@ -16,7 +16,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
@@ -51,4 +51,25 @@ class Module
             ),
         );
     }
+
+    // Add this method:
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Mapper\AccountTypeMapper' => function ($sm) {
+                    $tableGateway = $sm->get('AccountTypeMapperGateway');
+                    $table = new AlbumTable($tableGateway);
+                    return $table;
+                },
+                'AccountTypeMapperGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Album());
+                    return new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
+                },
+            ),
+        );
+    }
+
 }
