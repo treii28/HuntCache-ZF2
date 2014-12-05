@@ -96,10 +96,10 @@ abstract class ImageAbstract extends \Application\Model\ModelAbstract
     {
         $setMthd = 'set'.ucfirst($property);
         $caller  = get_called_class();
-        if(in_array($setMthd,$this->_getRef()->getMethods())) {
+        if(in_array($setMthd,$this->_getReflection()->getMethods())) {
             $this->$setMthd($data);
             return $this->$property;
-        } elseif(in_array($property,$this->_getRef()->getProperties())) {
+        } elseif(in_array($property,$this->_getReflection()->getProperties())) {
             $this->$property = $data;
             return $this->$property;
         } else {
@@ -114,7 +114,7 @@ abstract class ImageAbstract extends \Application\Model\ModelAbstract
      */
     public function __get($property)
     {
-        if(in_array($property,$this->_getRef()->getProperties())) {
+        if(in_array($property,$this->_getReflection()->getProperties())) {
             return $this->$property;
         } else {
             throw new \Exception(__METHOD__." no such property: $property");

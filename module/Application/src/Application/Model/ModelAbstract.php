@@ -10,7 +10,7 @@ abstract class ModelAbstract
     /**
      * @var $_ref \ReflectionClass
      */
-    protected $_ref;
+    protected $_ref = array();
 
     protected static $_dataMapperName = '';
     protected static $_dataMapper     = null;
@@ -41,12 +41,42 @@ abstract class ModelAbstract
         $this->_init($data);
     }
 
-    private function _getRef() {
-        if(!($this->_ref instanceof \ReflectionClass)) {
-            $this->_ref = new \ReflectionClass($this);
+    private function _getReflection($className=null) {
+        $className = (is_null($className)) ? get_called_class() : $className;
+        if(!isset($this->_ref[$className]) || !($this->_ref[$className] instanceof \ReflectionClass)) {
+            $this->_ref[$className] = new \ReflectionClass($className);
         }
-        return $this->_ref;
+        return $this->_ref[$className];
     }
+
+    private function _propertyExists($propertyName,$className=null)
+    {
+        foreach($this->_getReflection($className)->getProperties() as $prop) {
+            if($propertyName == $prop->name) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private function _statPropExists($staticPropertyName,$cls=null)
+    {
+        foreach($this->_getReflection($cls)->getStaticProperties() as $sProp) {
+            if($staticPropertyName == $sProp->name) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private function _methExists($methodName,$className=null)
+    {
+        foreach($this->_getReflection($className)->getMethods() as $meth) {
+            if($methodName == $meth->name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Initialize an instance of the class with an array of key/value pairs
      * @param array $data
@@ -65,7 +95,7 @@ abstract class ModelAbstract
             if($newObj instanceof $dataType) {
                 // clone newObj into this
                 $newRef = new \ReflectionClass($newObj);
-                foreach($newRef->getProperties() as $_prop) {
+                foreach($this->_getReflection($dataType)->getProperties() as $_prop) {
                     if(!$_prop->isStatic()) {
                         $_propName = $_prop->name;
                         $this->$_propName = $newObj->$_propName;
@@ -108,12 +138,12 @@ abstract class ModelAbstract
      */
     public function __set($property,$data)
     {
-        $setMthd = 'set'.ucfirst($property);
+        $setMethod = 'set'.ucfirst($property);
         $dataType  = get_called_class();
-        if(in_array($setMthd,$this->_getRef()->getMethods())) {
-            $this->$setMthd($data);
+        if($this->_methExists($setMethod)) {
+            $this->$setMethod($data);
             return $this->$property;
-        } elseif(in_array($property,$this->_getRef()->getProperties())) {
+        } elseif($this->_propertyExists($property)) {
             // check for an create/initialize sub objects
             if(isset($dataType::$_subs)&&array_key_exists($property,$dataType::$_subs)) {
                 $subClass = $dataType::$_subs[$property];
@@ -134,7 +164,7 @@ abstract class ModelAbstract
             // prefixing (sub) property name with sub datatype
             $notSub = true;
             $dtRef = new \ReflectionClass($dataType);
-            if(in_array('_subs',$dtRef->getStaticProperties())) {
+            if($this->_statPropExists('_subs',$dtRef)) {
                 foreach(array_keys($dataType::$_subs) as $_sKey) {
                     $preg = '/^'.$_sKey.'(.*)$/';
                     if(preg_match($preg,$property,$matches)) {
@@ -166,7 +196,7 @@ abstract class ModelAbstract
     {
         if(array_key_exists($property,$this->_data)) {
             return $this->_data[$property];
-        } elseif(in_array($property,$this->_getRef()->getProperties())) {
+        } elseif($this->_propertyExists($property)) {
             return $this->$property;
         } else {
             throw new \Exception(__METHOD__." no such property: $property");
@@ -176,7 +206,7 @@ abstract class ModelAbstract
     /**
      * Clear all of the values in the _data array and other properties
      */
-    function free()
+    public function free()
     {
         foreach ($this->_data as $field => $value) {
             $this->_data[$field] = null;
