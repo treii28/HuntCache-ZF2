@@ -2,59 +2,77 @@
 
 namespace Application\Mapper;
 
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\TableGateway\TableGateway;
+use \Zend\Db\Adapter\Adapter;
+use \Zend\Db\TableGateway\TableGateway;
+use \Zend\Db\RowGateway\RowGateway;
+use \Zend\ServiceManager\ServiceLocatorAwareInterface;
+use \Zend\ServiceManager\ServiceLocatorInterface;
 
-abstract class MapperAbstract extends \Application\Model\AbstractClass
+abstract class MapperAbstract implements ServiceLocatorAwareInterface
 {
-    protected static $_dbTable;
+    protected $dbAdapter;
+    protected $dbTable;
     const DB_TABLE_NAME = '';
+
+    // <editor-fold desc="ServiceLocatorAwareInterface methods">
+    /**
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->service_manager = $serviceLocator;
+    }
+
+    /**
+     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->service_manager;
+    }
+    // </editor-fold desc="ServiceLocatorAwareInterface methods">
+
+    // <editor-fold desc="TableGateway methods">
+    public function getDbAdapter()
+    {
+        if (!$this->dbAdapter) {
+            $this->adapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        }
+        return $this->dbAdapter;
+    }
+
+    /**
+     * @return \Zend\Db\TableGateway\TableGateway
+     * @throws \Exception
+     */
+    public function getDbTableGateway()
+    {
+        $tableName = self::_getDbTableName();
+        if(!isset($this->dbTable)) {
+            $this->dbTable = new TableGateway($tableName,$this->getDbAdapter());
+        }
+        if($this->dbTable instanceof TableGateway) {
+            return $this->dbTable;
+        } else {
+            throw new \Exception(__METHOD__." unable to retrieve db table '$tableName''");
+        }
+    }
+
+    // </editor-fold desc="TableGateway methods">
 
     /**
      * abstract class constructor
      */
     public function __construct() {
-        self::_childIsValid();
+        $this->_childIsValid();
         parent::__construct();
     }
 
-    /**
-     * use _getDbTable's getAdapter() method to get a \Zend\Db object for the default adapter.
-     * (this will initialize the class's cached default \Zend\Db\Table instance)
-     * @static
-     * @return \Zend\Db\Adapter\Adapter
-     * @see _getDbTableGateway()
-     */
-    public static function _getDb() {
-        return self::_getDbTableGateway()->getAdapter();
-    }
-
-    /**
-     * @static
-     * @param string $name  alternate table name to override stored name if desired
-     * @return TableGateway
-     * @throws \Exception
-     */
-    public static function _getDbTableGateway($name=null) {
-        $dataMapper = get_called_class();
-        if(!isset($name)) {
-            $name = $dataMapper::_getDbTableName();
-        }
-        if(!isset($dataMapper::$_dbTable)) {
-            $dataMapper::$_dbTable = new TableGateway($name);
-        }
-        if($dataMapper::$_dbTable instanceof TableGateway) {
-            return $dataMapper::$_dbTable;
-        } else {
-            throw new \Exception(__METHOD__." unable to retrieve db table '$name''");
-        }
-    }
-
-    public static function save($data) {
-        $dataType = self::_getDataType();
+    public function save($data) {
+        $dataType = $this->_getDataType();
 
         if($data instanceof $dataType) {
-            $idKey = self::_getModelPrimaryIdKey();
+            $idKey = $this->_getModelPrimaryIdKey();
             $store = array(
                 $idKey   => $data->getId()
             );
@@ -62,9 +80,9 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
                 $store[$k] = $v;
             }
 
-            $table = self::_getDbTableGateway();
-            if(intval($store[$idKey])>0&&self::dbRecordExists($data)) {
-                $where = $table->getAdapter()->quoteInto("$idKey = ?", $store[$idKey]);
+            $table = $this->getDbTableGateway();
+            if(intval( ($store[$idKey]) > 0) && ($this->dbRecordExists($data)) ) {
+                $where = $this->getDbAdapter()->quoteInto("$idKey = ?", $store[$idKey]);
                    return $table->update($store, $where);
             } else {
                 return $table->insert($store);
@@ -74,17 +92,13 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
         }
     }
 
-    public static function delete($data) {
-            $dataType = self::_getDataType();
+    public function delete($data) {
+            $dataType = $this->_getDataType();
             if($data instanceof $dataType) {
-                $idKey = self::_getModelPrimaryIdKey();
-                $store = array(
-                    $idKey   => $data->getId()
-                );
-                if(self::dbRecordExists($data)) {
-                    $tblNm = self::_getDbTableName(get_called_class());
-                    $table = self::_getDbTableGateway($tblNm);
-                    $where = $table->getAdapter()->quoteInto("$idKey = ?", $data->getId());
+                $idKey = $this->_getModelPrimaryIdKey();
+                if($this->dbRecordExists($data)) {
+                    $table = $this->getDbTableGateway();
+                    $where = $this->getDbAdapter()->quoteInto("$idKey = ?", $data->getId());
                     return $table->delete($where);
                 } else {
                     throw new \Exception($dataType."::delete record does not exist");
@@ -93,19 +107,20 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
                 throw new \Exception($dataType."::delete requires data of appropriate type");
             }
     }
+
     /**
      * checks to see if records for a given id exist in the database
      * @param object  $data
-     * @param string  classname for type of #data
+     * @throws \Exception
      * @return boolean  returns true if record of id exists
      */
-    public static function dbRecordExists($data) {
+    public function dbRecordExists($data) {
         $dataType = self::_getDataType();
 
         if($data instanceof $dataType) {
-            $idKey = self::_getModelPrimaryIdKey();
+            $idKey = $this->_getModelPrimaryIdKey();
             if(intval($data->$idKey) > 0) {
-                $model = self::getModelById($data->getId());
+                $model = $this->getModelById($data->getId());
                 return (boolean) ($model instanceof $dataType);
             } else {
                 throw new \Exception(__METHOD__." id not set");
@@ -119,25 +134,22 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
      * Retrieve a model by it's primary id
      * @param integer $id
      * @throws Exception if not found
-     * @return __CLASS__
+     * @return false|__CLASS__
      */
-    public static function getModelById($id) {
-        $dataType = self::_getDataType();
+    public function getModelById($id) {
+        $dataType = $this->_getDataType();
         $dataMapper = get_called_class();
         $id = intval($id);
-        $idKey = self::_getModelPrimaryIdKey();
+        $idKey = $this->_getModelPrimaryIdKey();
         if($id>0) {
-            $tblNm = self::_getDbTableName(get_called_class());
-            $table = self::_getDbTableGateway($tblNm);
+            $tblNm = $this->_getDbTableName(get_called_class());
+            $table = $this->getDbTableGateway($tblNm);
             $adptr = $table->getAdapter();
             $where = $adptr->quoteInto($idKey.' = ?', $id);
-            $rs = $table->fetchAll(
-                $table->select()
-                    ->where($where)
-            );
+            $rs = $table->select($where);
             if(count($rs)==1) {
                 $row = $rs->current();
-                $new =  self::_createModelFromRow($row);
+                $new =  $this->_createModelFromRow($row);
                 return $new;
             } else {
                 return false;
@@ -148,12 +160,12 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
         }
     }
 
-    public static function getModelJoined($id=null) {
+    public function getModelJoined($id=null) {
         $dataMapper = get_called_class();
-        $dataType   = self::_getDataType();
-        $idKey      = self::_getModelPrimaryIdKey();
+        $dataType   = $this->_getDataType();
+        $idKey      = $this->_getModelPrimaryIdKey();
 
-        $dB = self::_getDbTableGateway()->getAdapter();
+        $dB = $this->getDbTableGateway()->getAdapter();
         $select = $dB->select();
 
         $select->from(
@@ -197,12 +209,12 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
         return $res;
     }
 
-    public static function getIdsAsArray() {
+    public function getIdsAsArray() {
         $dataMapper = get_called_class();
 
-        $dataType = self::_getDataType();
-        $idKey = self::_getModelPrimaryIdKey();
-        $all = self::getAll($idKey);
+        $dataType = $this->_getDataType();
+        $idKey = $this->_getModelPrimaryIdKey();
+        $all = $this->getAll($idKey);
 
         $ids = array();
         foreach($all as $row) {
@@ -211,13 +223,13 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
         return $ids;
     }
 
-    public static function getIdLimits($id=null) {
+    public function getIdLimits($id=null) {
         $dataMapper = get_called_class();
 
-        $tblNm    = self::_getDbTableName();
-        $table    = self::_getDbTableGateway($tblNm);
-        $dataType = self::_getDataType();
-        $idKey    = self::_getModelPrimaryIdKey();
+        $tblNm    = $this->_getDbTableName();
+        $table    = $this->getDbTableGateway($tblNm);
+        $dataType = $this->_getDataType();
+        $idKey    = $this->_getModelPrimaryIdKey();
 
         $limits = array();
         $rs = $table->fetchAll(
@@ -279,19 +291,18 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
      * @return array   of models
      * @throws \Exception if unable to retrieve records
      */
-    public static function getAll() {
+    public function getAll() {
         $dataMapper = get_called_class();
-        $dataType = self::_getDataType();
         $tblNm    = self::_getDbTableName();
-        $table    = self::_getDbTableGateway($tblNm);
+        $table    = $this->getDbTableGateway($tblNm);
 
-        if($table instanceof \Zend\Db\Table) {
+        if($table instanceof TableGateway) {
             $rs = $table->fetchAll(
                 $table->select()
             );
             $models = array();
             foreach($rs as $row) {
-                array_push($models, self::_createModelFromRow($row));
+                array_push($models, $this->_createModelFromRow($row));
             }
             return $models;
         } else {
@@ -301,10 +312,10 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
 
     /**
      * (should be overridden in child to pass appropriate id and classname)
-     * @param \Zend\Db\Table_Row $row
+     * @param \Zend\Db\RowGateway\RowGateway $row
      * @return object of type $classname
      */
-    public static function _createModelFromRow(\Zend\Db\Table_Row $row) {
+    public function _createModelFromRow(RowGateway $row) {
         $dataType = self::_getDataType();
         $data = $row->toArray();
         $newModel = new $dataType($data);
@@ -312,16 +323,16 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
     }
 
     public static function _getDataType() {
-        $dataMapper = get_called_class();
-        if(defined($dataMapper."::MODEL_NAME")) {
-            return $dataMapper::MODEL_NAME;
+        if(defined(self::MODEL_NAME) && !empty(self::MODEL_NAME) && class_exists(self::MODEL_NAME)) {
+            return self::MODEL_NAME;
         } else {
             // try to guess the model name from the called class name
-            $_dt = preg_replace('/Mapper/', '', get_called_class());
+            // todo manipulate namespace to change Mapper for Model
+            $_dt = preg_replace('/Mapper$/', '', get_called_class());
             if(class_exists($_dt)) {
                 return $_dt;
             } else {
-                throw new \Exception(__METHOD__." Unable to determine datatype, please specify");
+                throw new \Exception(__METHOD__." Unable to determine datatype, please specify in model");
             }
         }
     }
@@ -337,11 +348,10 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
     }
 
     public static function _getDbTableName() {
-        $dataMapper = get_called_class();
-        if(defined($dataMapper.'::DB_TABLE_NAME')) {
-            return $dataMapper::DB_TABLE_NAME;
+        if(defined(self::DB_TABLE_NAME) && !empty(self::DB_TABLE_NAME)) {
+            return self::DB_TABLE_NAME;
         } else {
-            throw new \Exception($dataMapper." DB_TABLE_NAME not defined");
+            throw new \Exception(get_called_class()." DB_TABLE_NAME not defined");
         }
     }
 
@@ -350,10 +360,10 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
      * @static
      * @throws \Exception if invalid
      */
-    private static function _childIsValid($testModel=false) {
+    private function _childIsValid($testModel=false) {
         $dataMapper = get_called_class();
         // run local get methods to make sure MODEL_NAME and DB_TABLE_NAME are set properly in child
-        $dataType = self::_getDataType();
+        $dataType = $this->_getDataType();
 
         if($testModel) {
             //$dataType::_childIsValid();
@@ -368,7 +378,7 @@ abstract class MapperAbstract extends \Application\Model\AbstractClass
         if(defined($dataMapper . '::DB_TABLE_NAME')) {
             // see if we can get the table (also caches it)
            $dbTable = $dataMapper::_getDbTable();
-            if(!($dbTable instanceof \Zend\Db\Table)) {
+            if(!($dbTable instanceof TableGateway)) {
                 throw new \Exception(__METHOD__." unable to retrieve table: '" . $dataMapper::DB_TABLE_NAME . "'" );
             }
         } else {
