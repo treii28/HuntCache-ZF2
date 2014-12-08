@@ -10,6 +10,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
+        "doctrine/orm": "~2.4",
         "gowsram/g-maps": "dev-master",
         "php-google-maps/php-google-maps": "dev-master",
         "gpupo/coordinate": "dev-master",
